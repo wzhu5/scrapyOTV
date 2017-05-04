@@ -13,11 +13,8 @@ class HtmltitleSpider(scrapy.Spider):
     domains = pandas.read_csv('OTV_Video_Stream_201609.csv', usecols=[1])
     allowed_domains = domains['domain_name'].str.strip('[]').drop_duplicates().values.tolist()
     print allowed_domains
-
-    print allowed_domains
-    # print allowed_domains
-    urls = pandas.read_csv('OTV_Video_Stream_201609.csv',    usecols=[7]).values.tolist()
-    start_urls = urls.values.tolist()
+    urls = pandas.read_csv('OTV_Video_Stream_201609.csv', usecols=[7])
+    start_urls = urls['URL'].str.strip('[]').drop_duplicates().values.tolist()
 
     def parse(self, response):
         for sel in response.xpath('//head'):
