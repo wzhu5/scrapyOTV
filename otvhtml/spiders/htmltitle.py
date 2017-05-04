@@ -8,13 +8,15 @@ from otvhtml.items import Title
 
 class HtmltitleSpider(scrapy.Spider):
     name = "htmltitle"
-    # f = open('OTV_Video_Stream_201609.csv', 'rt')
-    cols = pandas.read_csv('OTV_Video_Stream_201609.csv', nrows=0).columns
-    domains = pandas.read_csv('OTV_Video_Stream_201609.csv', usecols=[1])
-    allowed_domains = domains['domain_name'].str.strip('[]').drop_duplicates().values.tolist()
-    print allowed_domains
-    urls = pandas.read_csv('OTV_Video_Stream_201609.csv', usecols=[7])
-    start_urls = urls['URL'].str.strip('[]').drop_duplicates().values.tolist()
+
+    def __init__(self, file_path='', domain_index='', url_index='', *args, **kwargs):
+        super(HtmltitleSpider, self).__init__(*args, **kwargs)
+        domain_index_int = int(domain_index)
+        url_index_int = int(url_index)
+        domains = pandas.read_csv(file_path, usecols=[domain_index_int])
+        self.allowed_domains = domains['domain_name'].str.strip('[]').drop_duplicates().values.tolist()
+        urls = pandas.read_csv(file_path, usecols=[url_index_int])
+        self.start_urls = urls['URL'].str.strip('[]').drop_duplicates().values.tolist()
 
     def parse(self, response):
         for sel in response.xpath('//head'):
