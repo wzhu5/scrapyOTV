@@ -1,13 +1,17 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 import scrapy
-
+from scrapy.contrib.loader import ItemLoader
+from otvhtml.items import Title
+# import items
 
 class HtmltitleSpider(scrapy.Spider):
     name = "htmltitle"
-    allowed_domains = ["v.youku.com"]
-    start_urls = ['http://v.youku.com/v_show/id_XMjczMzE1MzI0NA==.html?f=49644767/']
+    allowed_domains = [l.strip() for l in open('domains.txt').readlines()]
+    start_urls = [l.strip() for l in open('urls.txt').readlines()]
 
     def parse(self, response):
-        filename = 'test'
-        with open(filename, 'wb') as f:
-            f.write(response.body)
+        for sel in response.xpath('//head'):
+            item = Title()
+            item['request'] = response.url
+            item['title'] = sel.xpath('title/text()').extract()
+            yield item

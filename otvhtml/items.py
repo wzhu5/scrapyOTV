@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 # Define here the models for your scraped items
 #
@@ -7,11 +7,9 @@
 
 import scrapy
 
-
-class OtvhtmlItem(scrapy.Item):
+class Title(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     # define the fields for your item here like:
-    name = Field()
-    description = Field()
-    url = Field()
+    title = scrapy.Field()
+    request = scrapy.Field()

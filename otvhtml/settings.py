@@ -13,7 +13,7 @@ BOT_NAME = 'otvhtml'
 
 SPIDER_MODULES = ['otvhtml.spiders']
 NEWSPIDER_MODULE = 'otvhtml.spiders'
-
+FEED_EXPORT_ENCODING = 'utf-8'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'otvhtml (+http://www.yourdomain.com)'
